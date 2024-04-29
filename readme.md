@@ -40,6 +40,18 @@ $ 2fa --help
 
 ## TODO
 
-[] password
-[] encrypto
-[] custom storage path
+- [] Sleep
+- [] password
+- [] encrypto
+- [] custom storage path
+
+## HOW
+
+#### How to import Google Authenticator in command?
+
+1. Open the Authenticator, Click Menu on left top;
+2. Transform account and export accounts;
+3. You will get a qrcode image;
+4. Decode the qrcode. eg. [https://cli.im/deqr]()
+5. You will get a schema URL like _otpauth-migration://offline?data=_
+6. `2fa import --url <your url>`
