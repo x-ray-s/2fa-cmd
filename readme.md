@@ -37,7 +37,7 @@ $ 2fa --help
 	  $ 2fa add --name github --secret FCRJQZSGFD3VMZDE
 	  $ 2fa remove --name github
 	  $ 2fa verify --name github --token 643223
-	  $ 2fa import --url otpauth://totp/...
+	  $ 2fa import --url 'otpauth://totp/...'
 ```
 
 ## TODO
@@ -57,4 +57,4 @@ $ 2fa --help
 3. You will get a qrcode image;
 4. Decode the qrcode. eg. [https://cli.im/deqr]()
 5. You will get a schema URL like _otpauth-migration://offline?data=_
-6. `2fa import --url <your url>`
+6. `2fa import --url '<your url>'` > notice the quotation mark
