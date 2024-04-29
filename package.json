@@ -10,7 +10,7 @@
 		"node": ">=16"
 	},
 	"scripts": {
-		"build": "tsc",
+		"build": "node ./build.js && tsc",
 		"dev": "tsc --watch",
 		"test": "prettier --check . && xo && ava"
 	},
