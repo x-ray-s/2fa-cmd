@@ -1,7 +1,10 @@
 {
 	"name": "2fa-cmd",
-	"version": "0.0.0",
-	"license": "MIT",
+	"version": "0.0.1",
+	"description": "A command tool for Google Authenticator",
+	"author": "x-ray-s",
+	"email": "princesswar721@gmail.com",
+	"license": "ISC",
 	"bin": {
 		"2fa": "dist/cli.js"
 	},
@@ -9,6 +12,12 @@
 	"engines": {
 		"node": ">=16"
 	},
+	"keywords": [
+		"Google Authenticator",
+		"2fa",
+		"otplib",
+		"otp"
+	],
 	"scripts": {
 		"build": "tsc && node build.js",
 		"dev": "tsc --watch",
