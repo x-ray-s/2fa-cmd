@@ -7,6 +7,12 @@ Google Authenticator or other OTP application in command.
 ## Install
 
 ```bash
+npm i 2fa-cmd -g
+```
+
+## Contribute
+
+```bash
 $ git clone git@github.com:x-ray-s/2fa-cmd.git
 $ cd 2fa-cmd
 $ npm i && npm run build && npm link
@@ -42,8 +48,8 @@ $ 2fa --help
 
 ## TODO
 
-- [] npm publish
-- [] Sleep
+- [x] npm publish
+- [] rename
 - [] password
 - [] encrypto
 - [] custom storage path
