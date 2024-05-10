@@ -4,7 +4,7 @@
 	"description": "A command tool for Google Authenticator",
 	"author": "x-ray-s",
 	"email": "princesswar721@gmail.com",
-	"license": "ISC",
+	"license": "MIT",
 	"bin": {
 		"2fa": "dist/cli.js"
 	},

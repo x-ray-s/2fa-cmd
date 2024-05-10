@@ -49,10 +49,10 @@ $ 2fa --help
 ## TODO
 
 - [x] npm publish
-- [] rename
-- [] password
-- [] encrypto
-- [] custom storage path
+- [ ] rename
+- [ ] password
+- [ ] encrypto
+- [ ] custom storage path
 
 ## HOW
 
