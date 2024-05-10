@@ -8,6 +8,9 @@
 	"bin": {
 		"2fa": "dist/cli.js"
 	},
+	"repository": {
+		"url": "https://github.com/x-ray-s/2fa-cmd"
+	},
 	"type": "module",
 	"engines": {
 		"node": ">=16"
