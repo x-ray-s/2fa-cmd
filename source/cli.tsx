@@ -6,7 +6,7 @@ import App from './app.js';
 import chalk from 'chalk';
 import {decode} from './import.js';
 import {add, remove, has, find, importGA, rename} from './storage.js';
-import {verify} from './2fa.js';
+import {verify, generate} from './2fa.js';
 const cli = meow(
 	`
 	Usage
@@ -26,11 +26,13 @@ const cli = meow(
 
 	Examples
 	  $ 2fa
-	  $ 2fa add --name github --secret FCRJQZSGFD3VMZDE
-	  $ 2fa remove --name github
-	  $ 2fa verify --name github --token 643223
+	  $ 2fa add --name <name> --secret FCRJQZSGFD3VMZDE
+	  $ 2fa remove --name <name>
+	  $ 2fa verify --name <name> --token 643223
 	  $ 2fa import --url 'otpauth://totp/...'
 	  $ 2fa rename <old> --name <new>
+	  $ 2fa find --name <name>
+	  $ 2fa --name <name>
 `,
 	{
 		importMeta: import.meta,
@@ -121,6 +123,29 @@ const setError = (msg: string) => {
 			return process.exit(1);
 		}
 		await rename(old, name);
+		return process.exit(0);
+	}
+
+	if (cli.input.includes('get')) {
+		if (!name) {
+			setError('When get a OTP, name is required');
+			return process.exit(1);
+		}
+		const item = await find(name);
+		if (!item) {
+			setError('This name is not found');
+			return process.exit(1);
+		}
+		console.log(generate(item.secret).token);
+		return process.exit(0);
+	}
+	if (cli.input.length === 0 && name) {
+		const item = await find(name);
+		if (!item) {
+			setError('This name is not found');
+			return process.exit(1);
+		}
+		console.log(generate(item.secret).token);
 		return process.exit(0);
 	}
 })();

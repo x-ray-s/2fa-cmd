@@ -32,6 +32,7 @@ $ 2fa --help
 	  verify - verify a token
 	  import - Import a secret from url
 	  rename - Rename
+	  get - get one otp
 
 	Options
 		--name <The name of the secret>
@@ -41,11 +42,13 @@ $ 2fa --help
 
 	Examples
 	  $ 2fa
-	  $ 2fa add --name github --secret FCRJQZSGFD3VMZDE
-	  $ 2fa remove --name github
-	  $ 2fa verify --name github --token 643223
+	  $ 2fa add --name <name> --secret FCRJQZSGFD3VMZDE
+	  $ 2fa remove --name <name>
+	  $ 2fa verify --name <name> --token 643223
 	  $ 2fa import --url 'otpauth://totp/...'
-	  $ 2fa rename --name <old> <new>
+	  $ 2fa rename <old> --name <new>
+	  $ 2fa get --name <name>
+	  $ 2fa --name <name> // same as get
 ```
 
 ## TODO
