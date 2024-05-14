@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Text, Box, useInput, useApp} from 'ink';
+import {Text, Box, useInput, useApp, useStdin} from 'ink';
 import Bar, {useTimeused} from './Bar.js';
 import {generate} from './2fa.js';
 import {list, Data} from './storage.js';
@@ -12,6 +12,7 @@ export default function App() {
 	const countdown = useTimeused(max);
 	const [items, setItems] = React.useState<Data['items']>([]);
 	const {exit} = useApp();
+	const {isRawModeSupported} = useStdin();
 	useInput((input, key) => {
 		if (input === 'c' && key.ctrl) {
 			clear();
@@ -30,29 +31,28 @@ export default function App() {
 
 	return (
 		<>
-			{items.length ? (
+			{isRawModeSupported && items.length > 0 && (
 				<Box columnGap={1}>
 					<Bar max={max} current={countdown} />
 					<Text color="green">{countdown}</Text>
 				</Box>
-			) : (
-				<Text></Text>
 			)}
-			{items.map((item, index) => {
-				return (
-					<Box key={index} marginTop={1} flexDirection="column">
-						<Text>
-							<Text>{item.name}</Text>
-						</Text>
-
-						<Text>
-							<Text color="#005cc5" bold>
-								{generate(item.secret).token}
+			{isRawModeSupported &&
+				items.map((item, index) => {
+					return (
+						<Box key={index} marginTop={1} flexDirection="column">
+							<Text>
+								<Text>{item.name}</Text>
 							</Text>
-						</Text>
-					</Box>
-				);
-			})}
+
+							<Text>
+								<Text color="#005cc5" bold>
+									{generate(item.secret).token}
+								</Text>
+							</Text>
+						</Box>
+					);
+				})}
 		</>
 	);
 }
