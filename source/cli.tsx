@@ -5,7 +5,7 @@ import meow from 'meow';
 import App from './app.js';
 import chalk from 'chalk';
 import {decode} from './import.js';
-import {add, remove, has, find, importGA} from './storage.js';
+import {add, remove, has, find, importGA, rename} from './storage.js';
 import {verify} from './2fa.js';
 const cli = meow(
 	`
@@ -29,7 +29,8 @@ const cli = meow(
 	  $ 2fa add --name github --secret FCRJQZSGFD3VMZDE
 	  $ 2fa remove --name github
 	  $ 2fa verify --name github --token 643223
-	  $ 2fa import --url otpauth://totp/...
+	  $ 2fa import --url 'otpauth://totp/...'
+	  $ 2fa rename <old> --name <new>
 `,
 	{
 		importMeta: import.meta,
@@ -54,6 +55,7 @@ const setError = (msg: string) => {
 };
 (async function () {
 	const {name, secret, url, token} = cli.flags;
+
 	if (cli.input.includes('import')) {
 		if (!url) {
 			setError('When import 2fa, url is required');
@@ -62,7 +64,7 @@ const setError = (msg: string) => {
 
 		const gaData = await decode(url);
 		await importGA(gaData);
-		return process.exit(1);
+		return process.exit(0);
 	}
 
 	if (cli.input.includes('add')) {
@@ -78,7 +80,7 @@ const setError = (msg: string) => {
 			name: name,
 			secret: secret,
 		});
-		return process.exit(1);
+		return process.exit(0);
 	}
 
 	if (cli.input.includes('remove')) {
@@ -87,7 +89,7 @@ const setError = (msg: string) => {
 			return process.exit(1);
 		}
 		await remove(name);
-		return process.exit(1);
+		return process.exit(0);
 	}
 	if (cli.input.includes('verify')) {
 		if (!name || !token) {
@@ -105,7 +107,21 @@ const setError = (msg: string) => {
 				? chalk.green('Valid token')
 				: chalk.red('Invalid token'),
 		);
-		return process.exit(1);
+		return process.exit(0);
+	}
+
+	if (cli.input.includes('rename')) {
+		const old = cli.input[1];
+		if (!name || !old) {
+			setError('When rename a OTP, old name and new name are required');
+			return process.exit(1);
+		}
+		if (!(await has(old))) {
+			setError('This name is not found');
+			return process.exit(1);
+		}
+		await rename(old, name);
+		return process.exit(0);
 	}
 })();
 

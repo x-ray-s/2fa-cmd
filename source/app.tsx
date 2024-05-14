@@ -5,6 +5,8 @@ import {generate} from './2fa.js';
 import {list, Data} from './storage.js';
 import {clear} from './cli.js';
 
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
 export default function App() {
 	const max = 30;
 	const countdown = useTimeused(max);
@@ -19,6 +21,8 @@ export default function App() {
 
 	useEffect(() => {
 		(async () => {
+			// wait for the storage to be ready
+			await delay(500);
 			const _items = await list();
 			setItems(_items.reverse());
 		})();
@@ -26,10 +30,14 @@ export default function App() {
 
 	return (
 		<>
-			<Box columnGap={1}>
-				<Bar max={max} current={countdown} />
-				<Text color="green">{countdown}</Text>
-			</Box>
+			{items.length ? (
+				<Box columnGap={1}>
+					<Bar max={max} current={countdown} />
+					<Text color="green">{countdown}</Text>
+				</Box>
+			) : (
+				<Text></Text>
+			)}
 			{items.map((item, index) => {
 				return (
 					<Box key={index} marginTop={1} flexDirection="column">

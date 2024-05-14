@@ -31,6 +31,7 @@ $ 2fa --help
 	  remove - Remove a secret
 	  verify - verify a token
 	  import - Import a secret from url
+	  rename - Rename
 
 	Options
 		--name <The name of the secret>
@@ -44,12 +45,13 @@ $ 2fa --help
 	  $ 2fa remove --name github
 	  $ 2fa verify --name github --token 643223
 	  $ 2fa import --url 'otpauth://totp/...'
+	  $ 2fa rename --name <old> <new>
 ```
 
 ## TODO
 
 - [x] npm publish
-- [ ] rename
+- [x] rename
 - [ ] password
 - [ ] encrypto
 - [ ] custom storage path

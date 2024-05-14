@@ -44,6 +44,16 @@ export const find = async (name: string) => {
 	await db.read();
 	return db.data.items.find(item => item.name === name);
 };
+
+export const rename = async (oldName: string, newName: string) => {
+	const item = await find(oldName);
+	if (!item) {
+		return;
+	}
+	item.name = newName;
+	await db.write();
+};
+
 type GoogleAuthenticatorItem = {
 	name: string;
 	totpSecret: string;
