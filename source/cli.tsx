@@ -55,6 +55,9 @@ const cli = meow(
 const setError = (msg: string) => {
 	console.log(chalk.red(msg));
 };
+
+let clear = () => {};
+
 (async function () {
 	const {name, secret, url, token} = cli.flags;
 
@@ -148,10 +151,12 @@ const setError = (msg: string) => {
 		console.log(generate(item.secret).token);
 		return process.exit(0);
 	}
-})();
 
-const {clear} = render(<App />, {
-	exitOnCtrlC: false,
-});
+	const {clear: _clear} = render(<App />, {
+		exitOnCtrlC: false,
+	});
+
+	clear = _clear;
+})();
 
 export {clear};
